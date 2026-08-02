@@ -26,52 +26,31 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Barra de urgencia -->
-  <div class="urgent-bar">
-    <div class="container">
-      <span class="urgent-icon">⚠️</span>
-      <span class="urgent-text">Emergencia? Completa el formulario en menos de 1 minuto.</span>
-    </div>
-  </div>
-
-  <header class="site-header">
+  <header class="site-header compact">
     <div class="container header-content">
       <div class="brand">
         <h1 class="site-title">perdido.deosorno.cl</h1>
         <p class="site-subtitle">Genera tu aviso de perdido en segundos</p>
       </div>
-      <button class="btn btn-outline" onclick="scrollToForm()">Crear flyer ahora</button>
     </div>
   </header>
 
   <main>
-    <!-- Hero -->
-    <section class="hero">
+    <!-- Hero + Form en una sola vista -->
+    <section class="hero-hero">
       <div class="container">
-        <h2 class="hero-title">Sube una foto, completa lo básico y comparte en Facebook</h2>
-        <p class="hero-subtitle">Rápido, simple y pensado para emergencias reales en Osorno.</p>
-        <div class="hero-actions">
-          <button class="btn btn-primary btn-large" onclick="scrollToForm()">Crear flyer ahora</button>
-          <a href="#grupos-section" class="btn btn-secondary btn-large">Ver grupos de Osorno</a>
-        </div>
-        <div class="hero-trust">
-          <span>✓ 100% gratis</span>
-          <span>✓ Sin registro</span>
-          <span>✓ Funciona en móvil</span>
-        </div>
-      </div>
-    </section>
+        <div class="hero-grid">
+          <div class="hero-content">
+            <h2 class="hero-title">Sube una foto, completa lo básico y comparte en Facebook</h2>
+            <p class="hero-subtitle">Rápido, simple y pensado para emergencias reales en Osorno.</p>
+            <div class="hero-trust">
+              <span>✓ 100% gratis</span>
+              <span>✓ Sin registro</span>
+              <span>✓ Funciona en móvil</span>
+            </div>
+          </div>
 
-    <!-- Form + Preview -->
-    <section id="form-section" class="form-section">
-      <div class="container">
-        <div class="section-header">
-          <h3 class="section-title">1. Crea tu flyer</h3>
-          <p class="section-subtitle">Completa solo lo esencial. Tu flyer estará listo en menos de 30 segundos.</p>
-        </div>
-
-        <div class="grid">
-          <div class="card card-form">
+          <div class="form-card">
             <form id="flyer-form">
               <div class="form-row">
                 <div class="form-group">
@@ -82,6 +61,7 @@
                   <label for="tipo">Tipo</label>
                   <select id="tipo">
                     <option value="Mascota">Mascota</option>
+                    <option value="Persona">Persona</option>
                     <option value="Objeto">Objeto</option>
                     <option value="Documento">Documento</option>
                     <option value="Otro">Otro</option>
@@ -113,13 +93,12 @@
 
               <div class="form-group">
                 <label for="descripcion">Descripción breve (opcional)</label>
-                <textarea id="descripcion" placeholder="Ej: Collar rojo, responde a Max, última vez visto con correa azul" rows="3"></textarea>
+                <textarea id="descripcion" placeholder="Ej: Collar rojo, responde a Max, última vez visto con correa azul" rows="2"></textarea>
               </div>
 
               <div class="form-group">
                 <label for="foto">Foto principal</label>
                 <input type="file" id="foto" accept="image/*" />
-                <p class="form-help">Usa una foto clara y reciente. Evita filtros o fotos borrosas.</p>
               </div>
 
               <button type="button" class="btn btn-primary btn-block" onclick="generarFlyer()">
@@ -127,7 +106,14 @@
               </button>
             </form>
           </div>
+        </div>
+      </div>
+    </section>
 
+    <!-- Preview + Grupos + Checklist en una sola vista -->
+    <section class="preview-section">
+      <div class="container">
+        <div class="grid">
           <div class="card card-preview">
             <div class="preview-header">
               <h4>2. Vista previa</h4>
@@ -142,67 +128,35 @@
             </div>
             <div class="preview-actions">
               <button class="btn btn-secondary btn-block" onclick="descargarFlyer()">📥 Descargar flyer</button>
-              <p class="preview-help">Descarga la imagen y súbela a los grupos de Facebook.</p>
+            </div>
+          </div>
+
+          <div class="card card-groups">
+            <div class="preview-header">
+              <h4>3. Grupos de Facebook Osorno</h4>
+              <p>Publica en los grupos con más alcance.</p>
+            </div>
+            <div id="grupos-list" class="grupos-list">
+              <!-- Se llena con JS -->
+            </div>
+
+            <div class="preview-header" style="margin-top:16px">
+              <h4>4. Checklist de publicación</h4>
+              <p>Marca cada grupo cuando ya hayas publicado.</p>
+            </div>
+            <div id="checklist" class="checklist">
+              <!-- Se llena con JS -->
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Instrucciones rápidas -->
-    <section class="instrucciones-section">
-      <div class="container">
-        <div class="section-header">
-          <h3 class="section-title">¿Cómo funciona?</h3>
-          <p class="section-subtitle">Tres pasos simples para publicar tu aviso en minutos.</p>
-        </div>
-        <div class="steps-grid">
-          <div class="step-card">
-            <div class="step-number">1</div>
-            <h4>Completa el formulario</h4>
-            <p>Sube una foto clara y llena los datos básicos. Solo lo esencial.</p>
-          </div>
-          <div class="step-card">
-            <div class="step-number">2</div>
-            <h4>Genera y descarga</h4>
-            <p>Revisa la vista previa y descarga el flyer como imagen PNG.</p>
-          </div>
-          <div class="step-card">
-            <div class="step-number">3</div>
-            <h4>Publica en grupos</h4>
-            <p>Usa la lista de grupos de Osorno y marca los que ya publicaste.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Grupos -->
-    <section id="grupos-section" class="grupos-section">
-      <div class="container">
-        <div class="section-header">
-          <h3 class="section-title">3. Grupos de Facebook Osorno</h3>
-          <p class="section-subtitle">Publica en los grupos con más alcance para aumentar las posibilidades de encontrar.</p>
-        </div>
-        <div id="grupos-list" class="grupos-list">
-          <!-- Se llena con JS -->
-        </div>
-
-        <div class="section-header">
-          <h3 class="section-title">4. Checklist de publicación</h3>
-          <p class="section-subtitle">Marca cada grupo cuando ya hayas publicado tu aviso. No te pierdas ninguno.</p>
-        </div>
-        <div id="checklist" class="checklist">
-          <!-- Se llena con JS -->
-        </div>
-      </div>
-    </section>
-
     <!-- Tips útiles -->
-    <section class="tips-section">
+    <section class="tips-section compact">
       <div class="container">
         <div class="section-header">
           <h3 class="section-title">Tips para que tu aviso funcione</h3>
-          <p class="section-subtitle">Recomendaciones simples basadas en mejores prácticas.</p>
         </div>
         <div class="tips-grid">
           <div class="tip-card">
@@ -226,7 +180,7 @@
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer compact">
     <div class="container">
       <p class="footer-text">perdido.deosorno.cl — herramienta de emergencia para la comunidad de Osorno</p>
       <p class="footer-small">100% gratis • Sin registro • Tus datos se guardan solo en tu navegador</p>
