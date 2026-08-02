@@ -65,6 +65,7 @@ function prepararFlyerParaCaptura(){
   clone.style.zIndex = '-9999';
   clone.style.backgroundColor = '#FFFFFF';
   clone.style.opacity = '1';
+  clone.style.boxShadow = 'none';  // ✅ FIX: Elimina neblina
   document.body.appendChild(clone);
   return clone;
 }
@@ -85,6 +86,7 @@ function prepararFlyerParaCapturaFeed(){
   clone.style.backgroundColor = '#FFFFFF';
   clone.style.opacity = '1';
   clone.style.borderRadius = '12px';
+  clone.style.boxShadow = 'none';  // ✅ FIX: Elimina neblina
   document.body.appendChild(clone);
   return clone;
 }
