@@ -100,23 +100,29 @@ function descargarFlyerHistorias(){
     return;
   }
 
+  // ✅ FIX: Obtener dimensiones reales del elemento
+  const rect = clone.getBoundingClientRect();
+  const realWidth = Math.round(rect.width);
+  const realHeight = Math.round(rect.height);
+
   html2canvas(clone, {
     scale: 3,
     useCORS: true,
     backgroundColor: '#FFFFFF',
-    width: 450,
-    height: 800,
+    width: realWidth,
+    height: realHeight,
     scrollX: 0,
     scrollY: 0,
-    windowWidth: 1200,
-    windowHeight: 1200,
+    windowWidth: realWidth,
+    windowHeight: realHeight,
     ignoreElements: function(el){
       return el.style.opacity === '0' || el.style.display === 'none';
-    }
+    },
+    logging: false
   }).then(canvas => {
     const link = document.createElement('a');
     link.download = 'flyer-historias.png';
-    link.href = canvas.toDataURL('image/png');
+    link.href = canvas.toDataURL('image/png', 1.0);
     link.click();
     limpiarFlyerCaptura(clone);
   }).catch(err => {
@@ -132,26 +138,29 @@ function descargarFlyerFeed(){
     return;
   }
 
+  // ✅ FIX: Obtener dimensiones reales del elemento
   const rect = clone.getBoundingClientRect();
-  const feedHeight = Math.round(rect.height);
+  const realWidth = Math.round(rect.width);
+  const realHeight = Math.round(rect.height);
 
   html2canvas(clone, {
     scale: 3,
     useCORS: true,
     backgroundColor: '#FFFFFF',
-    width: 450,
-    height: feedHeight,
+    width: realWidth,
+    height: realHeight,
     scrollX: 0,
     scrollY: 0,
-    windowWidth: 1200,
-    windowHeight: 1200,
+    windowWidth: realWidth,
+    windowHeight: realHeight,
     ignoreElements: function(el){
       return el.style.opacity === '0' || el.style.display === 'none';
-    }
+    },
+    logging: false
   }).then(canvas => {
     const link = document.createElement('a');
     link.download = 'flyer-feed.png';
-    link.href = canvas.toDataURL('image/png');
+    link.href = canvas.toDataURL('image/png', 1.0);
     link.click();
     limpiarFlyerCaptura(clone);
   }).catch(err => {
