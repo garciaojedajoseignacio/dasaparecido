@@ -1,97 +1,17 @@
-/* Reset y Base */
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',system-ui,-apple-system,sans-serif;line-height:1.6;color:#1f2937;background:#f8fafc}
-.container{max-width:1200px;margin:0 auto;padding:0 16px}
-a{color:#2563eb;text-decoration:none}
-a:hover{text-decoration:underline}
-
-/* Header Compacto */
-.site-header.compact{padding:16px 0;background:#fff;border-bottom:1px solid #e5e7eb;position:sticky;top:0;z-index:100}
-.header-content{display:flex;justify-content:space-between;align-items:center;gap:16px}
-.brand{flex:1}
-.site-title{font-family:'Poppins',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.5px}
-.perdido{color:#E53935}
-.deosorno{color:#1f2937}
-.site-subtitle{font-size:13px;color:#6b7280;margin-top:2px}
-
-/* Hero Section */
-.hero-hero{background:#fff;padding:32px 0}
-.hero-grid{display:grid;grid-template-columns:1fr 400px;gap:32px;align-items:start}
-.hero-content{padding:16px 0}
-.hero-title{font-family:'Poppins',sans-serif;font-size:32px;font-weight:800;line-height:1.2;margin-bottom:12px;color:#1f2937;letter-spacing:-0.5px}
-.hero-subtitle{font-size:16px;color:#4b5563;margin-bottom:16px}
-.hero-trust{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:#059669;font-weight:600}
-.hero-trust span{display:flex;align-items:center;gap:4px}
-
-/* Form Card */
-.form-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:24px;box-shadow:0 4px 12px rgba(0,0,0,0.05)}
-#flyer-form{display:grid;gap:16px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.form-group{display:grid;gap:6px}
-.form-group label{font-size:13px;font-weight:600;color:#374151}
-.form-group input,.form-group select,.form-group textarea{padding:10px 12px;border:1px solid #d1d5db;border-radius:6px;font-size:14px;font-family:inherit;width:100%}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,0.1)}
-.form-group textarea{resize:vertical;min-height:60px}
-
-/* Botones */
-.btn{display:inline-block;padding:10px 20px;border-radius:6px;font-size:14px;font-weight:600;text-align:center;border:none;cursor:pointer;transition:all 0.2s}
-.btn-primary{background:linear-gradient(135deg,#E53935 0%,#C62828 100%);color:#fff}
-.btn-primary:hover{background:linear-gradient(135deg,#C62828 0%,#B71C1C 100%);transform:translateY(-1px)}
-.btn-secondary{background:#f3f4f6;color:#1f2937;border:1px solid #d1d5db}
-.btn-secondary:hover{background:#e5e7eb}
-.btn-block{width:100%}
-
-/* Preview Section */
-.preview-section{padding:24px 0}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.05)}
-.preview-header{margin-bottom:16px}
-.preview-header h4{font-size:16px;font-weight:700;color:#1f2935;margin-bottom:4px}
-.preview-header p{font-size:13px;color:#6b7280}
-
-/* Vista Previa del Flyer */
-.flyer-preview{border:1px dashed #d1d5db;border-radius:8px;padding:16px;min-height:200px;display:flex;align-items:center;justify-content:center;background:#f9fafb}
-.flyer-preview.has-content{border-style:solid;background:#fff}
-.flyer-placeholder{text-align:center;color:#9ca3af}
-.placeholder-icon{font-size:48px;margin-bottom:12px}
-.placeholder-hint{font-size:12px;color:#6b7280}
-.preview-actions{margin-top:16px}
-.preview-help{font-size:12px;color:#6b7280;text-align:center;margin-top:8px}
-
-/* Grupos y Checklist */
-.grupos-list,.checklist{display:grid;gap:12px;max-height:400px;overflow-y:auto;padding-right:8px}
-.grupo-item{padding:12px;border:1px solid #e5e7eb;border-radius:6px;font-size:13px}
-.grupo-item strong{display:block;margin-bottom:6px;color:#1f2937}
-.check-item label{display:flex;align-items:center;gap:8px;font-size:13px;color:#374151;cursor:pointer}
-.check-item input[type="checkbox"]{width:16px;height:16px}
-
-/* Tips Section Compacto */
-.tips-section.compact{padding:24px 0;background:#fff;border-top:1px solid #e5e7eb}
-.section-header{text-align:center;margin-bottom:20px}
-.section-title{font-family:'Poppins',sans-serif;font-size:20px;font-weight:700;color:#1f2937;letter-spacing:-0.5px}
-.tips-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.tip-card{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:16px}
-.tip-card h4{font-size:14px;font-weight:700;margin-bottom:8px;color:#1f2937}
-.tip-card p{font-size:13px;color:#4b5563;line-height:1.5}
-
-/* Footer Compacto */
-.site-footer.compact{background:#fff;padding:16px 0;border-top:1px solid #e5e7eb}
-.footer-text{font-size:13px;color:#4b5563;text-align:center;margin-bottom:4px}
-.footer-small{font-size:12px;color:#9ca3af;text-align:center}
-
-/* Responsive */
-@media (max-width: 900px){
-  .hero-grid{grid-template-columns:1fr}
-  .form-card{order:-1}
-  .grid{grid-template-columns:1fr}
-  .tips-grid{grid-template-columns:repeat(2,1fr)}
+/* --- Reglas específicas para el flyer y la imagen: evitar estiramiento --- */
+#flyer-capture {
+  box-sizing: border-box;
+  max-width: 450px; /* no forzar más ancho, pero limitar a 450px */
+  width: auto;      /* deja que el ancho se adapte (no expandir imágenes pequeñas) */
+  margin: 0 auto;
 }
 
-@media (max-width: 600px){
-  .hero-title{font-size:24px}
-  .form-row{grid-template-columns:1fr}
-  .tips-grid{grid-template-columns:1fr}
+#flyer-capture img {
+  display: block;
+  width: auto;          /* IMPORTANT: no forzar width:100% */
+  max-width: 100%;      /* limitar al ancho del contenedor */
+  height: auto;         /* conservar la relación de aspecto */
+  max-height: 200px;    /* límite para imágenes muy altas */
+  margin: 10px 0;
+  border-radius: 6px;
 }
-
-/* Animaciones */
-@keyframes flyer-appear{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
