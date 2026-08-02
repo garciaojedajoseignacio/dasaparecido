@@ -69,6 +69,27 @@ function prepararFlyerParaCaptura(){
   return clone;
 }
 
+// ✅ NUEVA FUNCIÓN SOLO PARA FEED - NO TOCA HISTORIAS
+function prepararFlyerParaCapturaFeed(){
+  const elemento = document.getElementById('flyer-capture');
+  if(!elemento) return null;
+
+  const clone = elemento.cloneNode(true);
+  clone.style.position = 'fixed';
+  clone.style.left = '-9999px';
+  clone.style.top = '0';
+  clone.style.width = '450px';
+  clone.style.height = 'auto';
+  clone.style.maxWidth = 'none';
+  clone.style.overflow = 'hidden';
+  clone.style.zIndex = '-9999';
+  clone.style.backgroundColor = '#FFFFFF';
+  clone.style.opacity = '1';
+  clone.style.borderRadius = '12px';
+  document.body.appendChild(clone);
+  return clone;
+}
+
 function limpiarFlyerCaptura(clone){
   if(clone) document.body.removeChild(clone);
 }
@@ -105,19 +126,23 @@ function descargarFlyerHistorias(){
   });
 }
 
+// ✅ FUNCIÓN DE FEED AHORA USA prepararFlyerParaCapturaFeed()
 function descargarFlyerFeed(){
-  const clone = prepararFlyerParaCaptura();
+  const clone = prepararFlyerParaCapturaFeed();
   if(!clone){
     alert('Primero genera el flyer.');
     return;
   }
+
+  const rect = clone.getBoundingClientRect();
+  const feedHeight = Math.round(rect.height);
 
   html2canvas(clone, {
     scale: 3,
     useCORS: true,
     backgroundColor: '#FFFFFF',
     width: 450,
-    height: 450,
+    height: feedHeight,
     scrollX: 0,
     scrollY: 0,
     windowWidth: 1200,
