@@ -100,7 +100,6 @@ function descargarFlyerHistorias(){
     return;
   }
 
-  // ✅ FIX: Obtener dimensiones reales del elemento
   const rect = clone.getBoundingClientRect();
   const realWidth = Math.round(rect.width);
   const realHeight = Math.round(rect.height);
@@ -108,7 +107,7 @@ function descargarFlyerHistorias(){
   html2canvas(clone, {
     scale: 3,
     useCORS: true,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: null,
     width: realWidth,
     height: realHeight,
     scrollX: 0,
@@ -138,7 +137,6 @@ function descargarFlyerFeed(){
     return;
   }
 
-  // ✅ FIX: Obtener dimensiones reales del elemento
   const rect = clone.getBoundingClientRect();
   const realWidth = Math.round(rect.width);
   const realHeight = Math.round(rect.height);
@@ -146,7 +144,7 @@ function descargarFlyerFeed(){
   html2canvas(clone, {
     scale: 3,
     useCORS: true,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: null,
     width: realWidth,
     height: realHeight,
     scrollX: 0,
