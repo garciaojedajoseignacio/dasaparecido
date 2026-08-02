@@ -24,7 +24,7 @@ function generarFlyer(){
   if(fotoInput.files && fotoInput.files[0]){
     const reader = new FileReader();
     reader.onload = function(e){
-      fotoHTML = `<img src="${e.target.result}" alt="Foto" style="width:100%;height:200px;object-fit:cover;margin:10px 0;border-radius:6px" />`;
+      fotoHTML = `<img src="${e.target.result}" alt="Foto" style="width:100%;height:280px;object-fit:cover;margin:12px 0;border-radius:6px" />`;
       renderFlyer(nombre,tipo,ubicacion,fecha,telefono,recompensa,descripcion,fotoHTML);
     };
     reader.readAsDataURL(fotoInput.files[0]);
@@ -36,16 +36,16 @@ function generarFlyer(){
 function renderFlyer(nombre,tipo,ubicacion,fecha,telefono,recompensa,descripcion,fotoHTML){
   const preview = document.getElementById('flyer-preview');
   preview.innerHTML = `
-    <div id="flyer-capture" style="background:#fff;border:3px solid #E53935;padding:16px;width:450px;margin:0 auto;border-radius:12px;box-shadow:0 8px 24px rgba(229,57,53,0.15);animation:flyer-appear 0.4s ease-out">
-      <h1 style="font-size:42px;color:#E53935;text-align:center;margin-bottom:6px;font-weight:800;letter-spacing:-1px">PERDIDO</h1>
+    <div id="flyer-capture" style="background:#fff;border:3px solid #E53935;padding:20px;width:450px;margin:0 auto;border-radius:12px;box-shadow:0 8px 24px rgba(229,57,53,0.15);animation:flyer-appear 0.4s ease-out">
+      <h1 style="font-size:48px;color:#E53935;text-align:center;margin-bottom:8px;font-weight:800;letter-spacing:-1px">PERDIDO</h1>
       ${fotoHTML}
-      <div style="font-size:16px;margin:6px 0"><strong>Tipo:</strong> ${tipo}</div>
-      <div style="font-size:16px;margin:6px 0"><strong>Nombre:</strong> ${nombre}</div>
-      <div style="font-size:16px;margin:6px 0"><strong>Ubicación:</strong> ${ubicacion}</div>
-      <div style="font-size:16px;margin:6px 0"><strong>Fecha:</strong> ${fecha}</div>
-      ${descripcion ? `<div style="font-size:14px;margin:6px 0"><strong>Descripción:</strong> ${descripcion}</div>`:''}
-      ${recompensa ? `<div style="font-size:14px;margin:6px 0"><strong>Recompensa:</strong> ${recompensa}</div>`:''}
-      <div style="font-size:24px;font-weight:800;margin-top:12px;text-align:center;background:linear-gradient(135deg, #E53935 0%, #C62828 100%);color:#fff;padding:12px;border-radius:8px">📞 ${telefono}</div>
+      <div style="font-size:18px;margin:8px 0"><strong>Tipo:</strong> ${tipo}</div>
+      <div style="font-size:18px;margin:8px 0"><strong>Nombre:</strong> ${nombre}</div>
+      <div style="font-size:18px;margin:8px 0"><strong>Ubicación:</strong> ${ubicacion}</div>
+      <div style="font-size:18px;margin:8px 0"><strong>Fecha:</strong> ${fecha}</div>
+      ${descripcion ? `<div style="font-size:16px;margin:8px 0"><strong>Descripción:</strong> ${descripcion}</div>`:''}
+      ${recompensa ? `<div style="font-size:16px;margin:8px 0"><strong>Recompensa:</strong> ${recompensa}</div>`:''}
+      <div style="font-size:28px;font-weight:800;margin-top:16px;text-align:center;background:linear-gradient(135deg, #E53935 0%, #C62828 100%);color:#fff;padding:14px;border-radius:8px">📞 ${telefono}</div>
     </div>
   `;
   preview.classList.add('has-content');
@@ -84,4 +84,82 @@ function descargarFlyerHistorias(){
     useCORS: true,
     backgroundColor: '#FFFFFF',
     width: 450,
-    height:
+    height: 800,
+    scrollX: 0,
+    scrollY: 0,
+    windowWidth: 1200,
+    windowHeight: 1200
+  }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'flyer-historias.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    limpiarFlyerCaptura(clone);
+  }).catch(err => {
+    console.error('Error:', err);
+    limpiarFlyerCaptura(clone);
+  });
+}
+
+function descargarFlyerFeed(){
+  const clone = prepararFlyerParaCaptura();
+  if(!clone){
+    alert('Primero genera el flyer.');
+    return;
+  }
+
+  html2canvas(clone, {
+    scale: 3,
+    useCORS: true,
+    backgroundColor: '#FFFFFF',
+    width: 450,
+    height: 450,
+    scrollX: 0,
+    scrollY: 0,
+    windowWidth: 1200,
+    windowHeight: 1200
+  }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'flyer-feed.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    limpiarFlyerCaptura(clone);
+  }).catch(err => {
+    console.error('Error:', err);
+    limpiarFlyerCaptura(clone);
+  });
+}
+
+function renderGrupos(){
+  const list = document.getElementById('grupos-list');
+  list.innerHTML = grupos.map(g => `
+    <div class="grupo-item">
+      <strong>${g.nombre}</strong><br/>
+      <a href="${g.url}" target="_blank" rel="noopener">Abrir grupo</a>
+    </div>
+  `).join('');
+}
+
+function renderChecklist(){
+  const checklist = document.getElementById('checklist');
+  const saved = JSON.parse(localStorage.getItem('checklist_osorno')||'{}');
+  checklist.innerHTML = grupos.map(g => `
+    <div class="check-item">
+      <label>
+        <input type="checkbox" data-id="${g.id}" ${saved[g.id]?'checked':''} onchange="toggleCheck(${g.id})" />
+        <span>${g.nombre}</span>
+      </label>
+    </div>
+  `).join('');
+}
+
+function toggleCheck(id){
+  const saved = JSON.parse(localStorage.getItem('checklist_osorno')||'{}');
+  saved[id] = !saved[id];
+  localStorage.setItem('checklist_osorno', JSON.stringify(saved));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderGrupos();
+  renderChecklist();
+});
