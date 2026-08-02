@@ -24,7 +24,7 @@ function generarFlyer(){
   if(fotoInput.files && fotoInput.files[0]){
     const reader = new FileReader();
     reader.onload = function(e){
-      fotoHTML = `<img src="${e.target.result}" alt="Foto" style="width:100%;max-height:200px;object-fit:contain;margin:10px 0;border-radius:6px;display:block" />`;
+      fotoHTML = `<img src="${e.target.result}" alt="Foto" style="max-width:100%;max-height:200px;height:auto;display:block;margin:10px 0;border-radius:6px" />`;
       renderFlyer(nombre,tipo,ubicacion,fecha,telefono,recompensa,descripcion,fotoHTML);
     };
     reader.readAsDataURL(fotoInput.files[0]);
