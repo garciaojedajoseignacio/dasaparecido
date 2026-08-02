@@ -1,1 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Perdido de Osorno</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="site-title">perdido.deosorno.cl</h1>
+      <p class="site-subtitle">Genera tu aviso de perdido en segundos</p>
+    </div>
+  </header>
 
+  <main class="container">
+    <section class="hero">
+      <h2>Sube una foto, completa lo básico y comparte en Facebook</h2>
+      <button class="btn btn-primary" onclick="scrollToForm()">Crear flyer ahora</button>
+    </section>
+
+    <section id="form-section" class="form-section">
+      <div class="grid">
+        <div class="card">
+          <h3>1. Datos del aviso</h3>
+          <form id="flyer-form">
+            <label>Nombre o tipo</label>
+            <input type="text" id="nombre" placeholder="Ej: Max, Celular, Mochila" required />
+
+            <label>Tipo</label>
+            <select id="tipo">
+              <option value="Mascota">Mascota</option>
+              <option value="Objeto">Objeto</option>
+              <option value="Documento">Documento</option>
+              <option value="Otro">Otro</option>
+            </select>
+
+            <label>Última ubicación</label>
+            <input type="text" id="ubicacion" placeholder="Ej: Sector Centro, Osorno" required />
+
+            <label>Fecha y hora</label>
+            <input type="text" id="fecha" placeholder="Ej: 01/08/2026, 22:00" required />
+
+            <label>Teléfono</label>
+            <input type="tel" id="telefono" placeholder="+56 9 1234 5678" required />
+
+            <label>Recompensa (opcional)</label>
+            <input type="text" id="recompensa" placeholder="Ej: Se ofrece recompensa" />
+
+            <label>Descripción breve (opcional)</label>
+            <textarea id="descripcion" placeholder="Ej: Collar rojo, responde a Max"></textarea>
+
+            <label>Foto principal</label>
+            <input type="file" id="foto" accept="image/*" />
+
+            <button type="button" class="btn btn-primary" onclick="generarFlyer()">
+              Generar flyer
+            </button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h3>2. Vista previa</h3>
+          <div id="flyer-preview" class="flyer-preview">
+            <div class="flyer-placeholder">
+              <p>Tu flyer aparecerá aquí</p>
+            </div>
+          </div>
+          <button class="btn btn-secondary" onclick="descargarFlyer()">Descargar</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="grupos-section">
+      <h3>3. Grupos de Facebook Osorno</h3>
+      <div id="grupos-list" class="grupos-list">
+        <!-- Se llena con JS -->
+      </div>
+
+      <h3>4. Checklist de publicación</h3>
+      <div id="checklist" class="checklist">
+        <!-- Se llena con JS -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>perdido.deosorno.cl — herramienta de emergencia</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
