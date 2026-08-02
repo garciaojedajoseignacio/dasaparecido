@@ -36,7 +36,7 @@ function generarFlyer(){
 function renderFlyer(nombre,tipo,ubicacion,fecha,telefono,recompensa,descripcion,fotoHTML){
   const preview = document.getElementById('flyer-preview');
   preview.innerHTML = `
-    <div id="flyer-capture" style="background:#fff;border:3px solid #E53935;padding:20px;max-width:450px;width:450px;margin:0 auto;border-radius:12px;box-shadow:0 8px 24px rgba(229,57,53,0.15);animation:flyer-appear 0.4s ease-out">
+    <div id="flyer-capture" style="background:#fff;border:3px solid #E53935;padding:20px;width:450px;margin:0 auto;border-radius:12px;box-shadow:0 8px 24px rgba(229,57,53,0.15);animation:flyer-appear 0.4s ease-out">
       <h1 style="font-size:48px;color:#E53935;text-align:center;margin-bottom:8px;font-weight:800;letter-spacing:-1px">PERDIDO</h1>
       ${fotoHTML}
       <div style="font-size:18px;margin:8px 0"><strong>Tipo:</strong> ${tipo}</div>
@@ -51,43 +51,82 @@ function renderFlyer(nombre,tipo,ubicacion,fecha,telefono,recompensa,descripcion
   preview.classList.add('has-content');
 }
 
-function descargarFlyerHistorias(){
+function prepararFlyerParaCaptura(){
   const elemento = document.getElementById('flyer-capture');
-  if(!elemento){
+  if(!elemento) return null;
+
+  const clone = elemento.cloneNode(true);
+  clone.style.position = 'fixed';
+  clone.style.left = '-9999px';
+  clone.style.top = '0';
+  clone.style.width = '450px';
+  clone.style.maxWidth = 'none';
+  clone.style.overflow = 'visible';
+  clone.style.zIndex = '-9999';
+  clone.style.backgroundColor = '#FFFFFF';
+  document.body.appendChild(clone);
+  return clone;
+}
+
+function limpiarFlyerCaptura(clone){
+  if(clone) document.body.removeChild(clone);
+}
+
+function descargarFlyerHistorias(){
+  const clone = prepararFlyerParaCaptura();
+  if(!clone){
     alert('Primero genera el flyer.');
     return;
   }
 
-  html2canvas(elemento, {
+  html2canvas(clone, {
     scale: 3,
     useCORS: true,
+    backgroundColor: '#FFFFFF',
     width: 450,
-    height: 800
+    height: 800,
+    scrollX: 0,
+    scrollY: 0,
+    windowWidth: 1200,
+    windowHeight: 1200
   }).then(canvas => {
     const link = document.createElement('a');
     link.download = 'flyer-historias.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
+    limpiarFlyerCaptura(clone);
+  }).catch(err => {
+    console.error('Error:', err);
+    limpiarFlyerCaptura(clone);
   });
 }
 
 function descargarFlyerFeed(){
-  const elemento = document.getElementById('flyer-capture');
-  if(!elemento){
+  const clone = prepararFlyerParaCaptura();
+  if(!clone){
     alert('Primero genera el flyer.');
     return;
   }
 
-  html2canvas(elemento, {
+  html2canvas(clone, {
     scale: 3,
     useCORS: true,
+    backgroundColor: '#FFFFFF',
     width: 450,
-    height: 450
+    height: 450,
+    scrollX: 0,
+    scrollY: 0,
+    windowWidth: 1200,
+    windowHeight: 1200
   }).then(canvas => {
     const link = document.createElement('a');
     link.download = 'flyer-feed.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
+    limpiarFlyerCaptura(clone);
+  }).catch(err => {
+    console.error('Error:', err);
+    limpiarFlyerCaptura(clone);
   });
 }
 
