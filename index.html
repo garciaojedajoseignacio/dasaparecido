@@ -2,92 +2,234 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Perdido de Osorno</title>
+  <title>Perdido de Osorno — Genera tu flyer en segundos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Herramienta gratuita para crear flyers de perdido en Osorno. Sube una foto, completa lo básico y comparte en Facebook rápidamente." />
+
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="Perdido de Osorno — Genera tu flyer en segundos" />
+  <meta property="og:description" content="Herramienta gratuita para crear flyers de perdido en Osorno. Sube una foto, completa lo básico y comparte en Facebook rápidamente." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://perdido.deosorno.cl" />
+  <meta property="og:image" content="https://perdido.deosorno.cl/assets/og-image.jpg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet" />
+
+  <!-- html2canvas -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="site-header">
+  <!-- Barra de urgencia -->
+  <div class="urgent-bar">
     <div class="container">
-      <h1 class="site-title">perdido.deosorno.cl</h1>
-      <p class="site-subtitle">Genera tu aviso de perdido en segundos</p>
+      <span class="urgent-icon">⚠️</span>
+      <span class="urgent-text">Emergencia? Completa el formulario en menos de 1 minuto.</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-content">
+      <div class="brand">
+        <h1 class="site-title">perdido.deosorno.cl</h1>
+        <p class="site-subtitle">Genera tu aviso de perdido en segundos</p>
+      </div>
+      <button class="btn btn-outline" onclick="scrollToForm()">Crear flyer ahora</button>
     </div>
   </header>
 
-  <main class="container">
+  <main>
+    <!-- Hero -->
     <section class="hero">
-      <h2>Sube una foto, completa lo básico y comparte en Facebook</h2>
-      <button class="btn btn-primary" onclick="scrollToForm()">Crear flyer ahora</button>
+      <div class="container">
+        <h2 class="hero-title">Sube una foto, completa lo básico y comparte en Facebook</h2>
+        <p class="hero-subtitle">Rápido, simple y pensado para emergencias reales en Osorno.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-large" onclick="scrollToForm()">Crear flyer ahora</button>
+          <a href="#grupos-section" class="btn btn-secondary btn-large">Ver grupos de Osorno</a>
+        </div>
+        <div class="hero-trust">
+          <span>✓ 100% gratis</span>
+          <span>✓ Sin registro</span>
+          <span>✓ Funciona en móvil</span>
+        </div>
+      </div>
     </section>
 
+    <!-- Form + Preview -->
     <section id="form-section" class="form-section">
-      <div class="grid">
-        <div class="card">
-          <h3>1. Datos del aviso</h3>
-          <form id="flyer-form">
-            <label>Nombre o tipo</label>
-            <input type="text" id="nombre" placeholder="Ej: Max, Celular, Mochila" required />
-
-            <label>Tipo</label>
-            <select id="tipo">
-              <option value="Mascota">Mascota</option>
-              <option value="Objeto">Objeto</option>
-              <option value="Documento">Documento</option>
-              <option value="Otro">Otro</option>
-            </select>
-
-            <label>Última ubicación</label>
-            <input type="text" id="ubicacion" placeholder="Ej: Sector Centro, Osorno" required />
-
-            <label>Fecha y hora</label>
-            <input type="text" id="fecha" placeholder="Ej: 01/08/2026, 22:00" required />
-
-            <label>Teléfono</label>
-            <input type="tel" id="telefono" placeholder="+56 9 1234 5678" required />
-
-            <label>Recompensa (opcional)</label>
-            <input type="text" id="recompensa" placeholder="Ej: Se ofrece recompensa" />
-
-            <label>Descripción breve (opcional)</label>
-            <textarea id="descripcion" placeholder="Ej: Collar rojo, responde a Max"></textarea>
-
-            <label>Foto principal</label>
-            <input type="file" id="foto" accept="image/*" />
-
-            <button type="button" class="btn btn-primary" onclick="generarFlyer()">
-              Generar flyer
-            </button>
-          </form>
+      <div class="container">
+        <div class="section-header">
+          <h3 class="section-title">1. Crea tu flyer</h3>
+          <p class="section-subtitle">Completa solo lo esencial. Tu flyer estará listo en menos de 30 segundos.</p>
         </div>
 
-        <div class="card">
-          <h3>2. Vista previa</h3>
-          <div id="flyer-preview" class="flyer-preview">
-            <div class="flyer-placeholder">
-              <p>Tu flyer aparecerá aquí</p>
+        <div class="grid">
+          <div class="card card-form">
+            <form id="flyer-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="nombre">Nombre o tipo</label>
+                  <input type="text" id="nombre" placeholder="Ej: Max, Celular, Mochila" required />
+                </div>
+                <div class="form-group">
+                  <label for="tipo">Tipo</label>
+                  <select id="tipo">
+                    <option value="Mascota">Mascota</option>
+                    <option value="Objeto">Objeto</option>
+                    <option value="Documento">Documento</option>
+                    <option value="Otro">Otro</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="ubicacion">Última ubicación</label>
+                  <input type="text" id="ubicacion" placeholder="Ej: Sector Centro, Osorno" required />
+                </div>
+                <div class="form-group">
+                  <label for="fecha">Fecha y hora</label>
+                  <input type="text" id="fecha" placeholder="Ej: 01/08/2026, 22:00" required />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="telefono">Teléfono de contacto</label>
+                  <input type="tel" id="telefono" placeholder="+56 9 1234 5678" required />
+                </div>
+                <div class="form-group">
+                  <label for="recompensa">Recompensa (opcional)</label>
+                  <input type="text" id="recompensa" placeholder="Ej: Se ofrece recompensa" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="descripcion">Descripción breve (opcional)</label>
+                <textarea id="descripcion" placeholder="Ej: Collar rojo, responde a Max, última vez visto con correa azul" rows="3"></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="foto">Foto principal</label>
+                <input type="file" id="foto" accept="image/*" />
+                <p class="form-help">Usa una foto clara y reciente. Evita filtros o fotos borrosas.</p>
+              </div>
+
+              <button type="button" class="btn btn-primary btn-block" onclick="generarFlyer()">
+                ✨ Generar flyer
+              </button>
+            </form>
+          </div>
+
+          <div class="card card-preview">
+            <div class="preview-header">
+              <h4>2. Vista previa</h4>
+              <p>Tu flyer se generará aquí en tiempo real.</p>
+            </div>
+            <div id="flyer-preview" class="flyer-preview">
+              <div class="flyer-placeholder">
+                <div class="placeholder-icon">📄</div>
+                <p>Tu flyer aparecerá aquí</p>
+                <p class="placeholder-hint">Completa el formulario y presiona "Generar flyer"</p>
+              </div>
+            </div>
+            <div class="preview-actions">
+              <button class="btn btn-secondary btn-block" onclick="descargarFlyer()">📥 Descargar flyer</button>
+              <p class="preview-help">Descarga la imagen y súbela a los grupos de Facebook.</p>
             </div>
           </div>
-          <button class="btn btn-secondary" onclick="descargarFlyer()">Descargar</button>
         </div>
       </div>
     </section>
 
-    <section class="grupos-section">
-      <h3>3. Grupos de Facebook Osorno</h3>
-      <div id="grupos-list" class="grupos-list">
-        <!-- Se llena con JS -->
+    <!-- Instrucciones rápidas -->
+    <section class="instrucciones-section">
+      <div class="container">
+        <div class="section-header">
+          <h3 class="section-title">¿Cómo funciona?</h3>
+          <p class="section-subtitle">Tres pasos simples para publicar tu aviso en minutos.</p>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h4>Completa el formulario</h4>
+            <p>Sube una foto clara y llena los datos básicos. Solo lo esencial.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h4>Genera y descarga</h4>
+            <p>Revisa la vista previa y descarga el flyer como imagen PNG.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h4>Publica en grupos</h4>
+            <p>Usa la lista de grupos de Osorno y marca los que ya publicaste.</p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <h3>4. Checklist de publicación</h3>
-      <div id="checklist" class="checklist">
-        <!-- Se llena con JS -->
+    <!-- Grupos -->
+    <section id="grupos-section" class="grupos-section">
+      <div class="container">
+        <div class="section-header">
+          <h3 class="section-title">3. Grupos de Facebook Osorno</h3>
+          <p class="section-subtitle">Publica en los grupos con más alcance para aumentar las posibilidades de encontrar.</p>
+        </div>
+        <div id="grupos-list" class="grupos-list">
+          <!-- Se llena con JS -->
+        </div>
+
+        <div class="section-header">
+          <h3 class="section-title">4. Checklist de publicación</h3>
+          <p class="section-subtitle">Marca cada grupo cuando ya hayas publicado tu aviso. No te pierdas ninguno.</p>
+        </div>
+        <div id="checklist" class="checklist">
+          <!-- Se llena con JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Tips útiles -->
+    <section class="tips-section">
+      <div class="container">
+        <div class="section-header">
+          <h3 class="section-title">Tips para que tu aviso funcione</h3>
+          <p class="section-subtitle">Recomendaciones simples basadas en mejores prácticas.</p>
+        </div>
+        <div class="tips-grid">
+          <div class="tip-card">
+            <h4>📸 Foto clara y reciente</h4>
+            <p>Una buena foto es lo más importante. Usa una imagen donde se vea bien el rostro o detalles únicos.</p>
+          </div>
+          <div class="tip-card">
+            <h4>📍 Ubicación precisa</h4>
+            <p>Indica la zona exacta donde se perdió. Esto ayuda a que la gente sepa dónde buscar.</p>
+          </div>
+          <div class="tip-card">
+            <h4>📞 Teléfono siempre disponible</h4>
+            <p>Usa un número que contestes rápido. Cada minuto cuenta.</p>
+          </div>
+          <div class="tip-card">
+            <h4>🔁 Publica en varios grupos</h4>
+            <p>Entre más grupos, más ojos ven tu aviso. Usa la checklist para no olvidar ninguno.</p>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <p>perdido.deosorno.cl — herramienta de emergencia</p>
+      <p class="footer-text">perdido.deosorno.cl — herramienta de emergencia para la comunidad de Osorno</p>
+      <p class="footer-small">100% gratis • Sin registro • Tus datos se guardan solo en tu navegador</p>
     </div>
   </footer>
 
