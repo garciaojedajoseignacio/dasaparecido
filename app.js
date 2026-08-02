@@ -64,6 +64,7 @@ function prepararFlyerParaCaptura(){
   clone.style.overflow = 'visible';
   clone.style.zIndex = '-9999';
   clone.style.backgroundColor = '#FFFFFF';
+  clone.style.opacity = '1';
   document.body.appendChild(clone);
   return clone;
 }
@@ -88,7 +89,10 @@ function descargarFlyerHistorias(){
     scrollX: 0,
     scrollY: 0,
     windowWidth: 1200,
-    windowHeight: 1200
+    windowHeight: 1200,
+    ignoreElements: function(el){
+      return el.style.opacity === '0' || el.style.display === 'none';
+    }
   }).then(canvas => {
     const link = document.createElement('a');
     link.download = 'flyer-historias.png';
@@ -117,7 +121,10 @@ function descargarFlyerFeed(){
     scrollX: 0,
     scrollY: 0,
     windowWidth: 1200,
-    windowHeight: 1200
+    windowHeight: 1200,
+    ignoreElements: function(el){
+      return el.style.opacity === '0' || el.style.display === 'none';
+    }
   }).then(canvas => {
     const link = document.createElement('a');
     link.download = 'flyer-feed.png';
