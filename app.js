@@ -36,7 +36,7 @@ function generarFlyer(){
 function renderFlyer(nombre,tipo,ubicacion,fecha,telefono,recompensa,descripcion,fotoHTML){
   const preview = document.getElementById('flyer-preview');
   preview.innerHTML = `
-    <div style="background:#fff;border:3px solid #E53935;padding:16px">
+    <div id="flyer-capture" style="background:#fff;border:3px solid #E53935;padding:16px;max-width:600px;margin:0 auto">
       <h1 style="font-size:42px;color:#E53935;text-align:center;margin-bottom:8px">PERDIDO</h1>
       ${fotoHTML}
       <div style="font-size:18px;margin:8px 0"><strong>Tipo:</strong> ${tipo}</div>
@@ -51,9 +51,21 @@ function renderFlyer(nombre,tipo,ubicacion,fecha,telefono,recompensa,descripcion
 }
 
 function descargarFlyer(){
-  const preview = document.getElementById('flyer-preview');
-  const html2canvas = null; // Aquí podrías integrar html2canvas para descargar como imagen
-  alert('Para descargar como imagen, integra una librería como html2canvas en el futuro.');
+  const elemento = document.getElementById('flyer-capture');
+  if(!elemento){
+    alert('Primero genera el flyer.');
+    return;
+  }
+
+  html2canvas(elemento, {
+    scale: 2,
+    useCORS: true
+  }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'flyer-perdido.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
 }
 
 function renderGrupos(){
