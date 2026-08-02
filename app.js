@@ -69,7 +69,6 @@ function prepararFlyerParaCaptura(){
   return clone;
 }
 
-// ✅ NUEVA FUNCIÓN SOLO PARA FEED - NO TOCA HISTORIAS
 function prepararFlyerParaCapturaFeed(){
   const elemento = document.getElementById('flyer-capture');
   if(!elemento) return null;
@@ -126,7 +125,6 @@ function descargarFlyerHistorias(){
   });
 }
 
-// ✅ FUNCIÓN DE FEED AHORA USA prepararFlyerParaCapturaFeed()
 function descargarFlyerFeed(){
   const clone = prepararFlyerParaCapturaFeed();
   if(!clone){
