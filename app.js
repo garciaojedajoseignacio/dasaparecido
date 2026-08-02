@@ -1,194 +1,126 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <title>Perdido de Osorno — Genera tu flyer en segundos</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Herramienta gratuita para crear flyers de perdido en Osorno. Sube una foto, completa lo básico y comparte en Facebook rápidamente." />
+const grupos = [
+  {id:1,nombre:"RED OSORNO (Noticias y Emergencias)",url:"https://www.facebook.com/groups/redosorno/"},
+  {id:2,nombre:"AVISOS OSORNO OFICIAL",url:"https://www.facebook.com/groups/843745069076236/"},
+  {id:3,nombre:"Osorno Mi ciudad",url:"https://www.facebook.com/groups/115649698974144/"},
+  {id:4,nombre:"Osorno Avisos 3.0",url:"https://www.facebook.com/groups/203134075932939/"},
+  {id:5,nombre:"Gente de Osorno",url:"https://www.facebook.com/groups/713990418698365/"},
+  {id:6,nombre:"OSORNO COMPRA-VENTA",url:"https://www.facebook.com/groups/112715278757926/"},
+  {id:7,nombre:"Ventas Osorno",url:"https://www.facebook.com/groups/395550820066290/"},
+];
 
-  <!-- Open Graph / Social -->
-  <meta property="og:title" content="Perdido de Osorno — Genera tu flyer en segundos" />
-  <meta property="og:description" content="Herramienta gratuita para crear flyers de perdido en Osorno. Sube una foto, completa lo básico y comparte en Facebook rápidamente." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://perdido.deosorno.cl" />
-  <meta property="og:image" content="https://perdido.deosorno.cl/assets/og-image.jpg" />
+function scrollToForm(){document.getElementById('form-section').scrollIntoView({behavior:'smooth'});}
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+function generarFlyer(){
+  const nombre = document.getElementById('nombre').value || '';
+  const tipo = document.getElementById('tipo').value || '';
+  const ubicacion = document.getElementById('ubicacion').value || '';
+  const fecha = document.getElementById('fecha').value || '';
+  const telefono = document.getElementById('telefono').value || '';
+  const recompensa = document.getElementById('recompensa').value || '';
+  const descripcion = document.getElementById('descripcion').value || '';
+  const fotoInput = document.getElementById('foto');
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet" />
+  let fotoHTML = '';
+  if(fotoInput.files && fotoInput.files[0]){
+    const reader = new FileReader();
+    reader.onload = function(e){
+      fotoHTML = `<img src="${e.target.result}" alt="Foto" style="width:100%;height:280px;object-fit:cover;margin:12px 0;border-radius:6px" />`;
+      renderFlyer(nombre,tipo,ubicacion,fecha,telefono,recompensa,descripcion,fotoHTML);
+    };
+    reader.readAsDataURL(fotoInput.files[0]);
+  }else{
+    renderFlyer(nombre,tipo,ubicacion,fecha,telefono,recompensa,descripcion,'');
+  }
+}
 
-  <!-- html2canvas -->
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <header class="site-header compact">
-    <div class="container header-content">
-      <div class="brand">
-        <h1 class="site-title">
-          <span class="perdido">perdido</span><span class="deosorno">.deosorno.cl</span>
-        </h1>
-        <p class="site-subtitle">Genera tu aviso de perdido en segundos</p>
-      </div>
+function renderFlyer(nombre,tipo,ubicacion,fecha,telefono,recompensa,descripcion,fotoHTML){
+  const preview = document.getElementById('flyer-preview');
+  preview.innerHTML = `
+    <div id="flyer-capture" style="background:#fff;border:3px solid #E53935;padding:20px;max-width:450px;width:450px;margin:0 auto;border-radius:12px;box-shadow:0 8px 24px rgba(229,57,53,0.15);animation:flyer-appear 0.4s ease-out">
+      <h1 style="font-size:48px;color:#E53935;text-align:center;margin-bottom:8px;font-weight:800;letter-spacing:-1px">PERDIDO</h1>
+      ${fotoHTML}
+      <div style="font-size:18px;margin:8px 0"><strong>Tipo:</strong> ${tipo}</div>
+      <div style="font-size:18px;margin:8px 0"><strong>Nombre:</strong> ${nombre}</div>
+      <div style="font-size:18px;margin:8px 0"><strong>Ubicación:</strong> ${ubicacion}</div>
+      <div style="font-size:18px;margin:8px 0"><strong>Fecha:</strong> ${fecha}</div>
+      ${descripcion ? `<div style="font-size:16px;margin:8px 0"><strong>Descripción:</strong> ${descripcion}</div>`:''}
+      ${recompensa ? `<div style="font-size:16px;margin:8px 0"><strong>Recompensa:</strong> ${recompensa}</div>`:''}
+      <div style="font-size:28px;font-weight:800;margin-top:16px;text-align:center;background:linear-gradient(135deg, #E53935 0%, #C62828 100%);color:#fff;padding:14px;border-radius:8px">📞 ${telefono}</div>
     </div>
-  </header>
+  `;
+  preview.classList.add('has-content');
+}
 
-  <main>
-    <!-- Hero + Form en una sola vista -->
-    <section class="hero-hero">
-      <div class="container">
-        <div class="hero-grid">
-          <div class="hero-content">
-            <h2 class="hero-title">Sube una foto, completa lo básico y comparte en Facebook</h2>
-            <p class="hero-subtitle">Rápido, simple y pensado para emergencias reales en Osorno.</p>
-            <div class="hero-trust">
-              <span>✓ 100% gratis</span>
-              <span>✓ Sin registro</span>
-              <span>✓ Funciona en móvil</span>
-            </div>
-          </div>
+function descargarFlyerHistorias(){
+  const elemento = document.getElementById('flyer-capture');
+  if(!elemento){
+    alert('Primero genera el flyer.');
+    return;
+  }
 
-          <div class="form-card">
-            <form id="flyer-form">
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="nombre">Nombre o tipo</label>
-                  <input type="text" id="nombre" placeholder="Ej: Max, Celular, Mochila" required />
-                </div>
-                <div class="form-group">
-                  <label for="tipo">Tipo</label>
-                  <select id="tipo">
-                    <option value="Mascota">Mascota</option>
-                    <option value="Persona">Persona</option>
-                    <option value="Objeto">Objeto</option>
-                    <option value="Documento">Documento</option>
-                    <option value="Otro">Otro</option>
-                  </select>
-                </div>
-              </div>
+  html2canvas(elemento, {
+    scale: 3,
+    useCORS: true,
+    width: 450,
+    height: 800
+  }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'flyer-historias.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+}
 
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="ubicacion">Última ubicación</label>
-                  <input type="text" id="ubicacion" placeholder="Ej: Sector Centro, Osorno" required />
-                </div>
-                <div class="form-group">
-                  <label for="fecha">Fecha y hora</label>
-                  <input type="text" id="fecha" placeholder="Ej: 01/08/2026, 22:00" required />
-                </div>
-              </div>
+function descargarFlyerFeed(){
+  const elemento = document.getElementById('flyer-capture');
+  if(!elemento){
+    alert('Primero genera el flyer.');
+    return;
+  }
 
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="telefono">Teléfono de contacto</label>
-                  <input type="tel" id="telefono" placeholder="+56 9 1234 5678" required />
-                </div>
-                <div class="form-group">
-                  <label for="recompensa">Recompensa (opcional)</label>
-                  <input type="text" id="recompensa" placeholder="Ej: Se ofrece recompensa" />
-                </div>
-              </div>
+  html2canvas(elemento, {
+    scale: 3,
+    useCORS: true,
+    width: 450,
+    height: 450
+  }).then(canvas => {
+    const link = document.createElement('a');
+    link.download = 'flyer-feed.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  });
+}
 
-              <div class="form-group">
-                <label for="descripcion">Descripción breve (opcional)</label>
-                <textarea id="descripcion" placeholder="Ej: Collar rojo, responde a Max, última vez visto con correa azul" rows="2"></textarea>
-              </div>
-
-              <div class="form-group">
-                <label for="foto">Foto principal</label>
-                <input type="file" id="foto" accept="image/*" />
-              </div>
-
-              <button type="button" class="btn btn-primary btn-block" onclick="generarFlyer()">
-                ✨ Generar flyer
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Preview + Grupos + Checklist en una sola vista -->
-    <section class="preview-section">
-      <div class="container">
-        <div class="grid">
-          <div class="card card-preview">
-            <div class="preview-header">
-              <h4>2. Vista previa</h4>
-              <p>Tu flyer se generará aquí en tiempo real.</p>
-            </div>
-            <div id="flyer-preview" class="flyer-preview">
-              <div class="flyer-placeholder">
-                <div class="placeholder-icon">📄</div>
-                <p>Tu flyer aparecerá aquí</p>
-                <p class="placeholder-hint">Completa el formulario y presiona "Generar flyer"</p>
-              </div>
-            </div>
-            <div class="preview-actions">
-              <button class="btn btn-secondary btn-block" onclick="descargarFlyer()">📥 Descargar flyer</button>
-            </div>
-          </div>
-
-          <div class="card card-groups">
-            <div class="preview-header">
-              <h4>3. Grupos de Facebook Osorno</h4>
-              <p>Publica en los grupos con más alcance.</p>
-            </div>
-            <div id="grupos-list" class="grupos-list">
-              <!-- Se llena con JS -->
-            </div>
-
-            <div class="preview-header" style="margin-top:16px">
-              <h4>4. Checklist de publicación</h4>
-              <p>Marca cada grupo cuando ya hayas publicado.</p>
-            </div>
-            <div id="checklist" class="checklist">
-              <!-- Se llena con JS -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Tips útiles -->
-    <section class="tips-section compact">
-      <div class="container">
-        <div class="section-header">
-          <h3 class="section-title">Tips para que tu aviso funcione</h3>
-        </div>
-        <div class="tips-grid">
-          <div class="tip-card">
-            <h4>📸 Foto clara y reciente</h4>
-            <p>Una buena foto es lo más importante. Usa una imagen donde se vea bien el rostro o detalles únicos.</p>
-          </div>
-          <div class="tip-card">
-            <h4>📍 Ubicación precisa</h4>
-            <p>Indica la zona exacta donde se perdió. Esto ayuda a que la gente sepa dónde buscar.</p>
-          </div>
-          <div class="tip-card">
-            <h4>📞 Teléfono siempre disponible</h4>
-            <p>Usa un número que contestes rápido. Cada minuto cuenta.</p>
-          </div>
-          <div class="tip-card">
-            <h4>🔁 Publica en varios grupos</h4>
-            <p>Entre más grupos, más ojos ven tu aviso. Usa la checklist para no olvidar ninguno.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer compact">
-    <div class="container">
-      <p class="footer-text">perdido.deosorno.cl — herramienta de emergencia para la comunidad de Osorno</p>
-      <p class="footer-small">100% gratis • Sin registro • Tus datos se guardan solo en tu navegador</p>
+function renderGrupos(){
+  const list = document.getElementById('grupos-list');
+  list.innerHTML = grupos.map(g => `
+    <div class="grupo-item">
+      <strong>${g.nombre}</strong><br/>
+      <a href="${g.url}" target="_blank" rel="noopener">Abrir grupo</a>
     </div>
-  </footer>
+  `).join('');
+}
 
-  <script src="app.js"></script>
-</body>
-</html>
+function renderChecklist(){
+  const checklist = document.getElementById('checklist');
+  const saved = JSON.parse(localStorage.getItem('checklist_osorno')||'{}');
+  checklist.innerHTML = grupos.map(g => `
+    <div class="check-item">
+      <label>
+        <input type="checkbox" data-id="${g.id}" ${saved[g.id]?'checked':''} onchange="toggleCheck(${g.id})" />
+        <span>${g.nombre}</span>
+      </label>
+    </div>
+  `).join('');
+}
+
+function toggleCheck(id){
+  const saved = JSON.parse(localStorage.getItem('checklist_osorno')||'{}');
+  saved[id] = !saved[id];
+  localStorage.setItem('checklist_osorno', JSON.stringify(saved));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderGrupos();
+  renderChecklist();
+});
