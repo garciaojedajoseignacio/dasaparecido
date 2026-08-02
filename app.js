@@ -8,7 +8,7 @@ const grupos = [
   {id:7,nombre:"Ventas Osorno",url:"https://www.facebook.com/groups/395550820066290/"},
 ];
 
-function scrollToForm(){document.getElementById('form-section')?.scrollIntoView({behavior:'smooth'});}
+function scrollToForm(){document.getElementById('form-section').scrollIntoView({behavior:'smooth'});}
 
 function generarFlyer(){
   const nombre = document.getElementById('nombre').value || '';
@@ -21,11 +21,10 @@ function generarFlyer(){
   const fotoInput = document.getElementById('foto');
 
   let fotoHTML = '';
-  if(fotoInput && fotoInput.files && fotoInput.files[0]){
+  if(fotoInput.files && fotoInput.files[0]){
     const reader = new FileReader();
     reader.onload = function(e){
-      // Imagen con width:auto y height:auto para conservar relación de aspecto
-      fotoHTML = `<img src="${e.target.result}" alt="Foto" />`;
+      fotoHTML = `<img src="${e.target.result}" alt="Foto" style="max-width:100%;max-height:200px;height:auto;display:block;margin:10px 0;border-radius:6px" />`;
       renderFlyer(nombre,tipo,ubicacion,fecha,telefono,recompensa,descripcion,fotoHTML);
     };
     reader.readAsDataURL(fotoInput.files[0]);
@@ -37,7 +36,7 @@ function generarFlyer(){
 function renderFlyer(nombre,tipo,ubicacion,fecha,telefono,recompensa,descripcion,fotoHTML){
   const preview = document.getElementById('flyer-preview');
   preview.innerHTML = `
-    <div id="flyer-capture" style="background:#fff;border:3px solid #E53935;padding:16px;max-width:450px;width:auto;margin:0 auto;border-radius:12px;box-shadow:0 8px 24px rgba(229,57,53,0.15);animation:flyer-appear 220ms ease both;">
+    <div id="flyer-capture" style="background:#fff;border:3px solid #E53935;padding:16px;width:450px;margin:0 auto;border-radius:12px;box-shadow:0 8px 24px rgba(229,57,53,0.15);animation:flyer-appear 0.4s ease-out">
       <h1 style="font-size:42px;color:#E53935;text-align:center;margin-bottom:6px;font-weight:800;letter-spacing:-1px">PERDIDO</h1>
       ${fotoHTML}
       <div style="font-size:16px;margin:6px 0"><strong>Tipo:</strong> ${tipo}</div>
@@ -56,19 +55,15 @@ function prepararFlyerParaCaptura(){
   const elemento = document.getElementById('flyer-capture');
   if(!elemento) return null;
 
-  const rect = elemento.getBoundingClientRect();
   const clone = elemento.cloneNode(true);
-
-  // use bounding rect to keep the same visual size (do not force a different width)
   clone.style.position = 'fixed';
   clone.style.left = '-9999px';
   clone.style.top = '0';
-  clone.style.width = Math.round(rect.width) + 'px'; // usar ancho real del elemento
-  clone.style.maxWidth = rect.width + 'px';
+  clone.style.width = '450px';
+  clone.style.maxWidth = 'none';
   clone.style.overflow = 'visible';
-  clone.style.zIndex = '9999';
+  clone.style.zIndex = '-9999';
   clone.style.backgroundColor = '#FFFFFF';
-  clone.style.boxSizing = 'border-box';
   document.body.appendChild(clone);
   return clone;
 }
@@ -84,21 +79,16 @@ function descargarFlyerHistorias(){
     return;
   }
 
-  // Obtener dimensiones reales del clone para evitar escalados que distorsionen
-  const rect = clone.getBoundingClientRect();
-  const optWidth = Math.round(rect.width);
-  const optHeight = Math.round(rect.height);
-
   html2canvas(clone, {
     scale: 3,
     useCORS: true,
     backgroundColor: '#FFFFFF',
-    width: optWidth,     // usar dimensiones del elemento
-    height: optHeight,
+    width: 450,
+    height: 800,
     scrollX: 0,
     scrollY: 0,
-    windowWidth: Math.max(window.innerWidth, optWidth),
-    windowHeight: Math.max(window.innerHeight, optHeight)
+    windowWidth: 1200,
+    windowHeight: 1200
   }).then(canvas => {
     const link = document.createElement('a');
     link.download = 'flyer-historias.png';
@@ -118,20 +108,16 @@ function descargarFlyerFeed(){
     return;
   }
 
-  const rect = clone.getBoundingClientRect();
-  const optWidth = Math.round(rect.width);
-  const optHeight = Math.round(rect.height);
-
   html2canvas(clone, {
     scale: 3,
     useCORS: true,
     backgroundColor: '#FFFFFF',
-    width: optWidth,
-    height: optHeight,
+    width: 450,
+    height: 450,
     scrollX: 0,
     scrollY: 0,
-    windowWidth: Math.max(window.innerWidth, optWidth),
-    windowHeight: Math.max(window.innerHeight, optHeight)
+    windowWidth: 1200,
+    windowHeight: 1200
   }).then(canvas => {
     const link = document.createElement('a');
     link.download = 'flyer-feed.png';
