@@ -58,29 +58,25 @@ function descargarFlyer(){
     return;
   }
 
-  console.log('=== DEBUG descargarFlyer ===');
-  console.log('1. Elemento:', elemento);
-  console.log('2. Style background:', elemento.style.background);
-  console.log('3. Computed background:', getComputedStyle(elemento).background);
+  // Guardar estilo original COMPLETO
+  const styleOriginal = elemento.getAttribute('style');
 
-  const styleSinFondo = 'border:3px solid #E53935;padding:16px;max-width:600px;margin:0 auto;border-radius:8px;box-shadow:0 8px 24px rgba(229,57,53,0.15);animation:flyer-appear 0.4s ease-out;';
-  elemento.setAttribute('style', styleSinFondo);
+  // Eliminar box-shadow para la captura
+  const styleSinSombra = 'background:#fff;border:3px solid #E53935;padding:16px;max-width:600px;margin:0 auto;border-radius:8px;animation:flyer-appear 0.4s ease-out;';
+  elemento.setAttribute('style', styleSinSombra);
   
   void elemento.offsetWidth;
-  console.log('4. Style después de cambiar:', elemento.style.background);
 
   html2canvas(elemento, {
     scale: 2,
     useCORS: true,
     allowTaint: true,
     backgroundColor: null,
-    logging: true,
+    logging: false,
     windowWidth: elemento.offsetWidth,
     windowHeight: elemento.offsetHeight
   }).then(canvas => {
-    console.log('5. Canvas generado:', canvas.width, 'x', canvas.height);
-    
-    const styleOriginal = 'background:#fff;border:3px solid #E53935;padding:16px;max-width:600px;margin:0 auto;border-radius:8px;box-shadow:0 8px 24px rgba(229,57,53,0.15);animation:flyer-appear 0.4s ease-out;';
+    // Restaurar estilo original
     elemento.setAttribute('style', styleOriginal);
     
     const link = document.createElement('a');
@@ -90,8 +86,6 @@ function descargarFlyer(){
   }).catch(err => {
     console.error('ERROR:', err);
     alert('Error al generar imagen: ' + err.message);
-    
-    const styleOriginal = 'background:#fff;border:3px solid #E53935;padding:16px;max-width:600px;margin:0 auto;border-radius:8px;box-shadow:0 8px 24px rgba(229,57,53,0.15);animation:flyer-appear 0.4s ease-out;';
     elemento.setAttribute('style', styleOriginal);
   });
 }
