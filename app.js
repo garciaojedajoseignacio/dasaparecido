@@ -58,38 +58,54 @@ function descargarFlyer(){
     return;
   }
 
-  // 1. Guardar el fondo original
-  const fondoOriginal = elemento.style.background;
+  console.log('=== DEBUG descargarFlyer ===');
+  console.log('1. Elemento:', elemento);
+  console.log('2. Style background:', elemento.style.background);
+  console.log('3. Computed background:', getComputedStyle(elemento).background);
+
+  const styleSinFondo = 'border:3px solid #E53935;padding:16px;max-width:600px;margin:0 auto;border-radius:8px;box-shadow:0 8px 24px rgba(229,57,53,0.15);animation:flyer-appear 0.4s ease-out;';
+  elemento.setAttribute('style', styleSinFondo);
   
-  // 2. Hacer el fondo transparente temporalmente
-  elemento.style.background = 'transparent';
-
-  // 3. Forzar reflow para que el navegador aplique el cambio
   void elemento.offsetWidth;
+  console.log('4. Style después de cambiar:', elemento.style.background);
 
-  // 4. Capturar con configuración corregida
   html2canvas(elemento, {
     scale: 2,
     useCORS: true,
     allowTaint: true,
-    backgroundColor: 'transparent',
-    logging: false,
+    backgroundColor: null,
+    logging: true,
     windowWidth: elemento.offsetWidth,
     windowHeight: elemento.offsetHeight
   }).then(canvas => {
-    // 5. Restaurar el fondo original
-    elemento.style.background = fondoOriginal;
-
+    console.log('5. Canvas generado:', canvas.width, 'x', canvas.height);
+    
+    const styleOriginal = 'background:#fff;border:3px solid #E53935;padding:16px;max-width:600px;margin:0 auto;border-radius:8px;box-shadow:0 8px 24px rgba(229,57,53,0.15);animation:flyer-appear 0.4s ease-out;';
+    elemento.setAttribute('style', styleOriginal);
+    
     const link = document.createElement('a');
     link.download = 'flyer-perdido.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
   }).catch(err => {
-    console.error('Error al generar imagen:', err);
-    elemento.style.background = fondoOriginal;
-    alert('Error al generar la imagen. Revisa la consola para más detalles.');
+    console.error('ERROR:', err);
+    alert('Error al generar imagen: ' + err.message);
+    
+    const styleOriginal = 'background:#fff;border:3px solid #E53935;padding:16px;max-width:600px;margin:0 auto;border-radius:8px;box-shadow:0 8px 24px rgba(229,57,53,0.15);animation:flyer-appear 0.4s ease-out;';
+    elemento.setAttribute('style', styleOriginal);
   });
 }
 
 function renderGrupos(){
-  const list
+  const list = document.getElementById('grupos-list');
+  list.innerHTML = grupos.map(g => `
+    <div class="grupo-item">
+      <strong>${g.nombre}</strong><br/>
+      <a href="${g.url}" target="_blank" rel="noopener">Abrir grupo</a>
+    </div>
+  `).join('');
+}
+
+function renderChecklist(){
+  const checklist = document.getElementById('checklist');
+  const saved
