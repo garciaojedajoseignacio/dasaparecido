@@ -159,7 +159,7 @@ body{font-family:var(--fuente);background:linear-gradient(180deg, #FFFBF0 0%, #F
 
 /* --- SOLUCIÓN FONDO GRIS EN IMAGEN --- */
 #flyer-capture{
-  background: #ffffff !important;
+  background: none !important;
   box-shadow: none !important;
   isolation: isolate;
   position: relative;
