@@ -8,29 +8,7 @@ const grupos = [
   {id:7,nombre:"Ventas Osorno",url:"https://www.facebook.com/groups/395550820066290/"},
 ];
 
-// Variable global para el formato actual
-let formatoActual = 'post';
-
 function scrollToForm(){document.getElementById('form-section').scrollIntoView({behavior:'smooth'});}
-
-// Función para cambiar entre formato Post y Story
-function setFormato(formato){
-  formatoActual = formato;
-  
-  // Actualizar botones
-  document.querySelectorAll('.format-btn').forEach(btn => {
-    btn.classList.remove('active');
-    if(btn.dataset.format === formato){
-      btn.classList.add('active');
-    }
-  });
-  
-  // Regenerar el flyer si ya existe
-  const preview = document.getElementById('flyer-preview');
-  if(preview.classList.contains('has-content')){
-    generarFlyer();
-  }
-}
 
 function generarFlyer(){
   const nombre = document.getElementById('nombre').value || '';
@@ -57,42 +35,17 @@ function generarFlyer(){
 
 function renderFlyer(nombre,tipo,ubicacion,fecha,telefono,recompensa,descripcion,fotoHTML){
   const preview = document.getElementById('flyer-preview');
-  
-  // Determinar estilos según formato
-  const esStory = formatoActual === 'story';
-  const estiloContainer = esStory 
-    ? 'background:#fff;border:3px solid #E53935;padding:16px;max-width:360px;aspect-ratio:9/16;min-height:640px;margin:0 auto;border-radius:8px;box-shadow:0 8px 24px rgba(229,57,53,0.15);display:flex;flex-direction:column;justify-content:space-between;animation:flyer-appear 0.4s ease-out'
-    : 'background:#fff;border:3px solid #E53935;padding:16px;max-width:540px;aspect-ratio:1/1;margin:0 auto;border-radius:8px;box-shadow:0 8px 24px rgba(229,57,53,0.15);animation:flyer-appear 0.4s ease-out';
-  
-  const estiloTitulo = esStory
-    ? 'font-size:32px;color:#E53935;text-align:center;margin-bottom:8px;font-weight:800'
-    : 'font-size:42px;color:#E53935;text-align:center;margin-bottom:8px;font-weight:800';
-  
-  const estiloFoto = esStory
-    ? 'width:100%;max-height:250px;object-fit:cover;margin:12px 0;border-radius:6px;flex-shrink:0'
-    : 'width:100%;max-height:300px;object-fit:cover;margin:12px 0;border-radius:6px';
-  
-  const estiloTexto = esStory ? 'font-size:14px;margin:6px 0' : 'font-size:18px;margin:8px 0';
-  const estiloDescripcion = esStory ? 'font-size:12px;margin:6px 0' : 'font-size:16px;margin:8px 0';
-  const estiloTelefono = esStory
-    ? 'font-size:20px;font-weight:800;margin-top:16px;text-align:center;background:linear-gradient(135deg, #E53935 0%, #C62828 100%);color:#fff;padding:10px;border-radius:6px'
-    : 'font-size:28px;font-weight:800;margin-top:16px;text-align:center;background:linear-gradient(135deg, #E53935 0%, #C62828 100%);color:#fff;padding:12px;border-radius:6px';
-  
   preview.innerHTML = `
-    <div id="flyer-capture" class="format-${formatoActual}" style="${estiloContainer}">
-      <div>
-        <h1 style="${estiloTitulo}">PERDIDO</h1>
-        ${fotoHTML ? `<div style="text-align:center">${fotoHTML}</div>` : ''}
-        <div style="${estiloTexto}"><strong>Tipo:</strong> ${tipo}</div>
-        <div style="${estiloTexto}"><strong>Nombre:</strong> ${nombre}</div>
-        <div style="${estiloTexto}"><strong>Ubicación:</strong> ${ubicacion}</div>
-        <div style="${estiloTexto}"><strong>Fecha:</strong> ${fecha}</div>
-        ${descripcion ? `<div style="${estiloDescripcion}"><strong>Descripción:</strong> ${descripcion}</div>`:''}
-        ${recompensa ? `<div style="${estiloDescripcion}"><strong>Recompensa:</strong> ${recompensa}</div>`:''}
-      </div>
-      <div style="text-align:center">
-        <div style="${estiloTelefono}">📞 ${telefono}</div>
-      </div>
+    <div id="flyer-capture" style="background:#fff;border:3px solid #E53935;padding:16px;max-width:600px;margin:0 auto;border-radius:8px;box-shadow:0 8px 24px rgba(229,57,53,0.15);animation:flyer-appear 0.4s ease-out">
+      <h1 style="font-size:42px;color:#E53935;text-align:center;margin-bottom:8px;font-weight:800">PERDIDO</h1>
+      ${fotoHTML}
+      <div style="font-size:18px;margin:8px 0"><strong>Tipo:</strong> ${tipo}</div>
+      <div style="font-size:18px;margin:8px 0"><strong>Nombre:</strong> ${nombre}</div>
+      <div style="font-size:18px;margin:8px 0"><strong>Ubicación:</strong> ${ubicacion}</div>
+      <div style="font-size:18px;margin:8px 0"><strong>Fecha:</strong> ${fecha}</div>
+      ${descripcion ? `<div style="font-size:16px;margin:8px 0"><strong>Descripción:</strong> ${descripcion}</div>`:''}
+      ${recompensa ? `<div style="font-size:16px;margin:8px 0"><strong>Recompensa:</strong> ${recompensa}</div>`:''}
+      <div style="font-size:28px;font-weight:800;margin-top:16px;text-align:center;background:linear-gradient(135deg, #E53935 0%, #C62828 100%);color:#fff;padding:12px;border-radius:6px">📞 ${telefono}</div>
     </div>
   `;
   preview.classList.add('has-content');
