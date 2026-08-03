@@ -58,51 +58,38 @@ function descargarFlyer(){
     return;
   }
 
+  // 1. Guardar el fondo original
+  const fondoOriginal = elemento.style.background;
+  
+  // 2. Hacer el fondo transparente temporalmente
+  elemento.style.background = 'transparent';
+
+  // 3. Forzar reflow para que el navegador aplique el cambio
+  void elemento.offsetWidth;
+
+  // 4. Capturar con configuración corregida
   html2canvas(elemento, {
     scale: 2,
     useCORS: true,
-    backgroundColor: null,
+    allowTaint: true,
+    backgroundColor: 'transparent',
     logging: false,
     windowWidth: elemento.offsetWidth,
     windowHeight: elemento.offsetHeight
   }).then(canvas => {
+    // 5. Restaurar el fondo original
+    elemento.style.background = fondoOriginal;
+
     const link = document.createElement('a');
     link.download = 'flyer-perdido.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
+  }).catch(err => {
+    console.error('Error al generar imagen:', err);
+    elemento.style.background = fondoOriginal;
+    alert('Error al generar la imagen. Revisa la consola para más detalles.');
   });
 }
 
 function renderGrupos(){
-  const list = document.getElementById('grupos-list');
-  list.innerHTML = grupos.map(g => `
-    <div class="grupo-item">
-      <strong>${g.nombre}</strong><br/>
-      <a href="${g.url}" target="_blank" rel="noopener">Abrir grupo</a>
-    </div>
-  `).join('');
-}
-
-function renderChecklist(){
-  const checklist = document.getElementById('checklist');
-  const saved = JSON.parse(localStorage.getItem('checklist_osorno')||'{}');
-  checklist.innerHTML = grupos.map(g => `
-    <div class="check-item">
-      <label>
-        <input type="checkbox" data-id="${g.id}" ${saved[g.id]?'checked':''} onchange="toggleCheck(${g.id})" />
-        <span>${g.nombre}</span>
-      </label>
-    </div>
-  `).join('');
-}
-
-function toggleCheck(id){
-  const saved = JSON.parse(localStorage.getItem('checklist_osorno')||'{}');
-  saved[id] = !saved[id];
-  localStorage.setItem('checklist_osorno', JSON.stringify(saved));
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  renderGrupos();
-  renderChecklist();
-});
+  const list
