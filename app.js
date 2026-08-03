@@ -58,35 +58,15 @@ function descargarFlyer(){
     return;
   }
 
-  // Guardar estilo original COMPLETO
-  const styleOriginal = elemento.getAttribute('style');
-
-  // Eliminar box-shadow para la captura
-  const styleSinSombra = 'background:#fff;border:3px solid #E53935;padding:16px;max-width:600px;margin:0 auto;border-radius:8px;animation:flyer-appear 0.4s ease-out;';
-  elemento.setAttribute('style', styleSinSombra);
-  
-  void elemento.offsetWidth;
-
-  html2canvas(elemento, {
+  // SnapDOM: Captura limpia sin necesidad de modificar estilos
+  snapdom.download(elemento, {
+    format: 'png',
+    filename: 'flyer-perdido',
     scale: 2,
-    useCORS: true,
-    allowTaint: true,
-    backgroundColor: null,
-    logging: false,
-    windowWidth: elemento.offsetWidth,
-    windowHeight: elemento.offsetHeight
-  }).then(canvas => {
-    // Restaurar estilo original
-    elemento.setAttribute('style', styleOriginal);
-    
-    const link = document.createElement('a');
-    link.download = 'flyer-perdido.png';
-    link.href = canvas.toDataURL('image/png');
-    link.click();
+    backgroundColor: '#ffffff'
   }).catch(err => {
     console.error('ERROR:', err);
     alert('Error al generar imagen: ' + err.message);
-    elemento.setAttribute('style', styleOriginal);
   });
 }
 
