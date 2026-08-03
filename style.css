@@ -156,3 +156,8 @@ body{font-family:var(--fuente);background:linear-gradient(180deg, #FFFBF0 0%, #F
   .checklist{grid-template-columns:1fr}
   .tips-grid{grid-template-columns:1fr}
 }
+
+/* --- CAMBIO PARA SOLUCIONAR FONDO BLANCO --- */
+#flyer-capture{
+  background: white !important;
+}
