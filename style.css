@@ -157,7 +157,14 @@ body{font-family:var(--fuente);background:linear-gradient(180deg, #FFFBF0 0%, #F
   .tips-grid{grid-template-columns:1fr}
 }
 
-/* --- CAMBIO PARA SOLUCIONAR FONDO BLANCO --- */
+/* --- SOLUCIÓN FONDO GRIS EN IMAGEN --- */
 #flyer-capture{
-  background: white !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  isolation: isolate;
+  position: relative;
+}
+
+#flyer-preview #flyer-capture{
+  z-index: 1;
 }
