@@ -52,13 +52,18 @@ function renderFlyer(nombre,tipo,ubicacion,fecha,telefono,recompensa,descripcion
 }
 
 function descargarFlyer(){
+  if(typeof snapdom === 'undefined'){
+    alert('Error: SnapDOM no está cargado. Revisa tu conexión a internet.');
+    console.error('SnapDOM no definido');
+    return;
+  }
+  
   const elemento = document.getElementById('flyer-capture');
   if(!elemento){
     alert('Primero genera el flyer.');
     return;
   }
 
-  // SnapDOM: Captura limpia sin necesidad de modificar estilos
   snapdom.download(elemento, {
     format: 'png',
     filename: 'flyer-perdido',
