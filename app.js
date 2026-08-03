@@ -120,4 +120,12 @@ function renderChecklist(){
 }
 
 function toggleCheck(id){
-  const
+  const saved = JSON.parse(localStorage.getItem('checklist_osorno')||'{}');
+  saved[id] = !saved[id];
+  localStorage.setItem('checklist_osorno', JSON.stringify(saved));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderGrupos();
+  renderChecklist();
+});
