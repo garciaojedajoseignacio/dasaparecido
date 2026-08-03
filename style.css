@@ -76,6 +76,38 @@ body{font-family:var(--fuente);background:linear-gradient(180deg, #FFFBF0 0%, #F
 .preview-header{margin-bottom:12px}
 .preview-header h4{font-family:var(--fuente-titulo);font-size:16px;font-weight:700;color:var(--negro);margin-bottom:4px}
 .preview-header p{font-size:13px;color:#666}
+
+/* Selector de formato */
+.preview-format-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.format-btn {
+  flex: 1;
+  padding: 10px 16px;
+  border: 2px solid #e5e5e5;
+  background: #fff;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #666;
+}
+
+.format-btn:hover {
+  border-color: #E53935;
+  color: #E53935;
+}
+
+.format-btn.active {
+  border-color: #E53935;
+  background: #E53935;
+  color: #fff;
+}
+
 .flyer-preview{background:var(--gris);border:2px dashed #ccc;border-radius:8px;padding:16px;min-height:200px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;transition:all 0.3s}
 .flyer-preview.has-content{border-style:solid;border-color:var(--rojo);background:linear-gradient(135deg, #fff 0%, #FFFBF0 100%)}
 .flyer-placeholder{text-align:center;color:#888}
