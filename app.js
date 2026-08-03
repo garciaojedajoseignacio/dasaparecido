@@ -60,7 +60,11 @@ function descargarFlyer(){
 
   html2canvas(elemento, {
     scale: 2,
-    useCORS: true
+    useCORS: true,
+    backgroundColor: null,
+    logging: false,
+    windowWidth: elemento.offsetWidth,
+    windowHeight: elemento.offsetHeight
   }).then(canvas => {
     const link = document.createElement('a');
     link.download = 'flyer-perdido.png';
