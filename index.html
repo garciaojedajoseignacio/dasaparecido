@@ -21,8 +21,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet" />
 
-  <!-- html2canvas - SIN defer para carga correcta -->
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <!-- SnapDOM - Reemplaza html2canvas -->
+  <script src="https://cdn.jsdelivr.net/npm/@zumer/snapdom/dist/snapdom.min.js"></script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -132,63 +132,3 @@
               <button class="btn btn-secondary btn-block" onclick="descargarFlyer()">📥 Descargar flyer</button>
             </div>
           </div>
-
-          <div class="card card-groups">
-            <div class="preview-header">
-              <h4>3. Grupos de Facebook Osorno</h4>
-              <p>Publica en los grupos con más alcance.</p>
-            </div>
-            <div id="grupos-list" class="grupos-list">
-              <!-- Se llena con JS -->
-            </div>
-
-            <div class="preview-header" style="margin-top:16px">
-              <h4>4. Checklist de publicación</h4>
-              <p>Marca cada grupo cuando ya hayas publicado.</p>
-            </div>
-            <div id="checklist" class="checklist">
-              <!-- Se llena con JS -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Tips útiles -->
-    <section class="tips-section compact">
-      <div class="container">
-        <div class="section-header">
-          <h3 class="section-title">Tips para que tu aviso funcione</h3>
-        </div>
-        <div class="tips-grid">
-          <div class="tip-card">
-            <h4>📸 Foto clara y reciente</h4>
-            <p>Una buena foto es lo más importante. Usa una imagen donde se vea bien el rostro o detalles únicos.</p>
-          </div>
-          <div class="tip-card">
-            <h4>📍 Ubicación precisa</h4>
-            <p>Indica la zona exacta donde se perdió. Esto ayuda a que la gente sepa dónde buscar.</p>
-          </div>
-          <div class="tip-card">
-            <h4>📞 Teléfono siempre disponible</h4>
-            <p>Usa un número que contestes rápido. Cada minuto cuenta.</p>
-          </div>
-          <div class="tip-card">
-            <h4>🔁 Publica en varios grupos</h4>
-            <p>Entre más grupos, más ojos ven tu aviso. Usa la checklist para no olvidar ninguno.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer compact">
-    <div class="container">
-      <p class="footer-text">perdido.deosorno.cl — herramienta de emergencia para la comunidad de Osorno</p>
-      <p class="footer-small">100% gratis • Sin registro • Tus datos se guardan solo en tu navegador</p>
-    </div>
-  </footer>
-
-  <script src="app.js"></script>
-</body>
-</html>
